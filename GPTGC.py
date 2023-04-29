@@ -1,19 +1,19 @@
 """
-    GPT-RC (Review Classifier)
-    GPT-RC is a GPT-2 based model fine-tuned for classifying movie genres.
+    GPT-GC (Review Classifier)
+    GPT-GC is a GPT-2 based model fine-tuned for classifying movie genres.
 """
 import torch, logging
 from torch.utils.data import DataLoader, random_split
 from Trainer import Trainer
 from DataLoader import MovieGenresDataset, GPT2ClassificationCollate
 from Common import *
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 from sklearn.metrics import accuracy_score
 from transformers import (GPT2Config, GPT2Tokenizer, GPT2ForSequenceClassification, get_linear_schedule_with_warmup, set_seed)
 
 # Model Configuration
 params = {
-    "NAME": "GPTRC",
+    "NAME": "GPTGC",
     "LOG_DIR": "logs/",
     "MODEL_DIR": "models/",
     "BATCH_SIZE": 16,
@@ -28,7 +28,7 @@ params = {
     "SEED": 42
 }
 
-class GPTRC():
+class GPTGC():
     def __init__(self, device, fine_tune=False):
         set_seed(params["SEED"])
         self.device = device
@@ -110,7 +110,7 @@ class GPTRC():
             'train_accuracy': [], 
             'val_accuracy': []
         }
-        for epoch in tqdm(range(params["EPOCHS"])):
+        for epoch in range(params["EPOCHS"]):
             print("x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x")
             print(f"Epoch: [{epoch+1}]\[{params['EPOCHS']}]")
             # Perform one full pass over the training set.
@@ -133,6 +133,7 @@ class GPTRC():
             accuracies['val_accuracy'].append(val_accuracy)
             # Save the model
             self.save_model()
+        return losses, accuracies
     
     def validation(self, dataloader):
         predictions_labels = []
