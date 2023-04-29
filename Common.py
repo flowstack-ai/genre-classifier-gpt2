@@ -1,4 +1,4 @@
-
+import os
 
 OUTPUT_LABELS = {
     'drama': 0, 'thriller': 1, 'adult': 2, 'documentary': 3, 'comedy': 4, 'crime': 5, 'reality-tv': 6, 
@@ -8,3 +8,9 @@ OUTPUT_LABELS = {
 }
 
 N_OUTPUT_LABELS = len(OUTPUT_LABELS)
+
+# This function creates a directory if it deosn't already exists 
+def wrap_dir(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+    return path

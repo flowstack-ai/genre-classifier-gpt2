@@ -15,6 +15,7 @@ from transformers import (GPT2Config, GPT2Tokenizer, GPT2ForSequenceClassificati
 params = {
     "NAME": "GPTRC",
     "LOG_DIR": "logs/",
+    "MODEL_DIR": "models/",
     "BATCH_SIZE": 16,
     "EPOCHS": 4,
     "LEARNING_RATE": 2e-5,
@@ -130,6 +131,8 @@ class GPTRC():
             losses['val_loss'].append(val_loss)
             accuracies['train_accuracy'].append(train_accuracy)
             accuracies['val_accuracy'].append(val_accuracy)
+            # Save the model
+            self.save_model()
     
     def validation(self, dataloader):
         predictions_labels = []
@@ -148,4 +151,8 @@ class GPTRC():
                 predictions_labels += predict_content
         avg_epoch_loss = total_loss / len(dataloader)
         return true_labels, predictions_labels, avg_epoch_loss
+    
+    def save_model(self):
+        print("-> Saving model ...")
+        torch.save(self.model.state_dict(), f"{params['MODEL_DIR']}/{params['NAME']}.pt")
         
