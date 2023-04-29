@@ -8,10 +8,6 @@ venv/
 env/
 *.venv
 
-# Other generated files
-*.csv
-*.pickle
-
 # Jupyter Notebook
 .ipynb_checkpoints/
 *.ipynb

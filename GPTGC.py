@@ -1,5 +1,5 @@
 """
-    GPT-GC (Review Classifier)
+    GPT-GC (Genre Classifier)
     GPT-GC is a GPT-2 based model fine-tuned for classifying movie genres.
 """
 import torch, logging
