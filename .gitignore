@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+*.venv
+
+# Other generated files
+*.csv
+*.pickle
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+*.nbconvert.ipynb
+
+# IDEs and editors
+.vscode/
+.idea/
+*.code-workspace
+*.iml
+
+# Other miscellaneous files
+.DS_Store
