@@ -4,9 +4,12 @@ from ftfy import fix_text
 
 
 class MovieGenresDataset(Dataset):
-    def __init__(self, path):
-        self.dataset = open(path, 'r', encoding='utf-8')
-        self.dataset = self.dataset.read().strip().split('\n')
+    def __init__(self, path, infer=False, data_instance=""):
+        if infer and data_instance != "":
+            self.dataset = ["ID ::: TITLE ::: GENRE ::: "+data_instance]
+        else:
+            self.dataset = open(path, 'r', encoding='utf-8')
+            self.dataset = self.dataset.read().strip().split('\n')
         self.output_labels = {}
         self.labels = []
         self.texts = []
@@ -32,9 +35,14 @@ class MovieGenresDataset(Dataset):
 
 
 class GPT2ClassificationCollate(object):
-    def __init__(self, tokenizer, labels, max_seq_len):
+    def __init__(self, tokenizer, labels, max_seq_len, infer=False):
+        if infer:
+            self.labels = {
+                "GENRE": 0
+            }
+        else:
+            self.labels = labels
         self.tokenizer = tokenizer
-        self.labels = labels
         self.max_seq_len = max_seq_len
 
     def __call__(self, sequences):

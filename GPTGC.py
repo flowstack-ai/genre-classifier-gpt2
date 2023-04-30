@@ -29,7 +29,7 @@ params = {
 }
 
 class GPTGC():
-    def __init__(self, device, fine_tune=False):
+    def __init__(self, device, fine_tune=False,  resume=False):
         set_seed(params["SEED"])
         self.device = device
         self.base_model = "gpt2"
@@ -51,9 +51,11 @@ class GPTGC():
                                                              num_training_steps=len(self.train_dataloader) * params["EPOCHS"])
             self.trainer = Trainer(self.model, self.optimizer, self.scheduler, self.device)
         else:
-            print("-> Loading GPT-RC ...")
+            print("-> Initializing GPT-GC ...")
             params["OUTPUT_LABELS"] = OUTPUT_LABELS
             params["N_OUTPUT_LABELS"] = N_OUTPUT_LABELS
+            self.init_model()
+            self.load_model()
     
     def load_tokenizer(self):
         print('-> Loading tokenizer ...')
@@ -156,4 +158,27 @@ class GPTGC():
     def save_model(self):
         print("-> Saving model ...")
         torch.save(self.model.state_dict(), f"{params['MODEL_DIR']}/{params['NAME']}.pt")
-        
+    
+    def load_model(self):
+        print("-> Loading the fine-tuned GPTGC model from disk ...")
+        self.model.load_state_dict(torch.load(f"{params['MODEL_DIR']}/{params['NAME']}.pt"))
+        print("-> GPT-GC Model loaded successfully!")
+    
+    def predict(self, text):
+        print("-> Predicting ...")
+        predictions_labels = []
+        dataset = MovieGenresDataset("", infer=True, data_instance=text)
+        collator = GPT2ClassificationCollate(self.tokenizer, params["OUTPUT_LABELS"], params["MAX_SEQ_LEN"], infer=True)
+        dataloader = DataLoader(dataset, batch_size=params["BATCH_SIZE"], shuffle=False, collate_fn=collator)
+        self.model.eval()
+        for batch in dataloader:
+            batch = { k:v.type(torch.long).to(self.device) for k,v in batch.items() }
+            with torch.no_grad():        
+                outputs = self.model(**batch)
+                loss, logits = outputs[:2]
+                logits = logits.detach().cpu().numpy()
+                predict_content = logits.argmax(axis=-1).flatten().tolist()
+                predictions_labels += predict_content
+        result = [key for key, value in params["OUTPUT_LABELS"].items() if value == predictions_labels[0]][0]
+        print("-> Done. Prediction: ", result)
+        return result
