@@ -10,6 +10,7 @@ from Common import *
 from tqdm.notebook import tqdm
 from sklearn.metrics import accuracy_score
 from transformers import (GPT2Config, GPT2Tokenizer, GPT2ForSequenceClassification, get_linear_schedule_with_warmup, set_seed)
+import matplotlib.pyplot as plt
 
 # Model Configuration
 params = {
@@ -182,3 +183,21 @@ class GPTGC():
         result = [key for key, value in params["OUTPUT_LABELS"].items() if value == predictions_labels[0]][0]
         print("-> Done. Prediction: ", result)
         return result
+
+    def plot_accuracy(self, accuracies):
+        plt.plot(accuracies['train_accuracy'], label='Train Accuracy')
+        plt.plot(accuracies['val_accuracy'], label='Validation Accuracy')
+        plt.xlabel('Epoch')
+        plt.ylabel('Accuracy')
+        plt.title('Training and Validation Accuracy')
+        plt.legend()
+        plt.show()
+    
+    def plot_loss(self, losses):
+        plt.plot(losses['train_loss'], label='Train Loss')
+        plt.plot(losses['val_loss'], label='Validation Loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.title('Training and Validation Loss')
+        plt.legend()
+        plt.show()
