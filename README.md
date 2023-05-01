@@ -42,4 +42,4 @@ The GPT-GC was given sample movie descriptions for inference purposes and it sho
 In above table we can see that out of 5 samples our model correctly predicted 3 and the fourth prediction is also really close. Pretty impressive :).
 
 ## Credits
-This project was developed by Malik Talha. The Movie Genre Classification dataset was obtained from Kaggle. The GPT-2 model was developed by OpenAI. The Transformers library was developed by Hugging Face. Special thanks to [George Mihaila](https://github.com/gmihaila) for his helpful content regarding fine-tuning GPT-2 and other language models.
+This project was developed by Malik Talha and Hunaid Sohail. The Movie Genre Classification dataset was obtained from Kaggle. The GPT-2 model was developed by OpenAI. The Transformers library was developed by Hugging Face. Special thanks to [George Mihaila](https://github.com/gmihaila) for his helpful content regarding fine-tuning GPT-2 and other language models.
