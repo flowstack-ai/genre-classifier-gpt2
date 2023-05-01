@@ -10,7 +10,7 @@ GPT - GC (Genre Classifier) is a GPT-2 based model fine-tuned for text classific
 - sklearn
 
 ## Dataset
-The dataset was sourced from kaggle and can be found at this link: https://www.kaggle.com/datasets/hijest/genre-classification-dataset-imdb.
+The dataset was sourced from Kaggle and can be found at this link: https://www.kaggle.com/datasets/hijest/genre-classification-dataset-imdb.
 
 ## Preprocessing
 Before fine-tuning the GPT-GC model, the dataset was preprocessed by tokenizing the text using the `GPT2Tokenizer` and encoding the genre labels as integers. The text was also truncated to a maximum length of 256 tokens to ensure that training is faster and smoother.
@@ -29,7 +29,7 @@ The performance of the model was evaluated at every epoch during training and va
 | 4 | 1.26404 | 1.30743 | 0.60914 | 0.60341 |
 
 ## Inference
-The GPT-GC was given sample movie descriptions for inference purposes and it showed impressive results for a model that was fine-tuned on a decoder only tranformer not  suitable for text classification tasks. Below are some samples with their predictions and actual labels:
+The GPT-GC was given sample movie descriptions for inference purposes and it showed impressive results for a model that was fine-tuned on a decoder only transformer not  suitable for text classification tasks. Below are some samples with their predictions and actual labels:
 
 | # | Movie Description | Predicted Genre | Actual Genre |
 | --- | --- | --- | --- |
