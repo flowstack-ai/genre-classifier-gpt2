@@ -1,4 +1,5 @@
 import os
+import matplotlib.pyplot as plt
 
 OUTPUT_LABELS = {
     'drama': 0, 'thriller': 1, 'adult': 2, 'documentary': 3, 'comedy': 4, 'crime': 5, 'reality-tv': 6, 
@@ -14,3 +15,11 @@ def wrap_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
     return path
+
+def plot_output_labels(output_labels):
+    fig, ax = plt.subplots()
+    ax.bar(output_labels.keys(), output_labels.values())
+    ax.set_xticklabels(output_labels.keys(), rotation=90)
+    ax.set_ylabel('Frequency')
+    ax.set_title('Output Label Distribution')
+    plt.show()
